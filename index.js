@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
        console.log(`user connected ${socket.id}`)
        socket.on("join",(data)=>{
           socket.join(data.room)
-          socket.to(data.room).emit("user-joined",{message:`${data.name} has joined the chat`,sender:data.sender})
+          socket.to(data.room).emit("user-joined",{message:`${data.user} has joined the chat`,user:data.user})
        })
        socket.on("send-message",(data)=>{
           socket.to(data.room).emit("recieve-message",data)
