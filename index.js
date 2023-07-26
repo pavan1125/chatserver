@@ -11,17 +11,21 @@ let io = require('socket.io')(server, {
     }
 });
 
-const users=[]
 
 io.on('connection', (socket) => {
-       console.log(`user connected ${socket.id}`)
+     
        socket.on("join",(data)=>{
+         console.log(data)
           socket.join(data.room)
-          socket.to(data.room).emit("user-joined",{message:`${data.user} has joined the chat`,user:data.user})
+          data.user="Admin"
+          socket.to(data.room).emit("user-joined",{message:`${data.name} has joined the chat`,user:data.user})
        })
        socket.on("send-message",(data)=>{
           socket.to(data.room).emit("recieve-message",data)
        })
+
+      
   });
+  
 
 server.listen(process.env.PORT || 4000, () => console.log(`Server has started.`));
